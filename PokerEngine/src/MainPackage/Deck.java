@@ -1,56 +1,60 @@
 package MainPackage;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.UUID;
+
 public class Deck {
-
-	// private Card[] DeckOfCards;
-	private int[] deck;
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public Deck() {
-		deck = new int[52];
-		String[] suits = { "Spades", "Hearts", "Diamonds", "Clubs" };
-		String[] ranks = { "Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-				"Jack", "Queen", "King" };
-
-		// Initialize cards
-		for (int i = 0; i < deck.length; i++) {
-			deck[i] = i;
+	
+	private ArrayList<Card> DeckCards = new ArrayList<Card>(52);
+	
+	private UUID DeckNbr;
+	
+	public Deck()
+	{
+		this.DeckNbr = UUID.randomUUID();
+		
+		for (int i=0; i<4; i++)
+		{
+			eSuit suit = eSuit.values()[i];
+			for (int j=0; j<13; j++)
+			{
+				eCardValue value = eCardValue.values()[j];
+				Card c = new Card(suit, value);
+				DeckCards.add(c);
+			}
 		}
+		
+		System.out.println("\n\t**DECK**");
+		printDeck();
 		
 		shuffle();
 		
-		// Display the first four cards
-		for (int i = 0; i < deck.length; i++) {
-			String suit = suits[deck[i] / 13];
-			String rank = ranks[deck[i] % 13];
-			System.out.println(i +1 + ". Card number " + deck[i] + ": " + rank + " of "
-					+ suit);
-		}
+		System.out.println("\n\tSHUFFLED DECK**");
+		printDeck();
 	}
-
-	void shuffle() {
-		// Shuffle the cards
-		for (int i = 0; i < deck.length; i++) {
-			// Generate an index randomly
-			int index = (int) (Math.random() * deck.length);
-			int temp = deck[i];
-			deck[i] = deck[index];
-			deck[index] = temp;
-		}
-	}
-
-	// Card draw() {
-	// // return next card
-	//
-	// }
 	
-	// int cardsRemaining() {
-	// // how many cards remaining to be drawn
-	//
-	// }
+	void printDeck() {
+		for (int i=0; i < DeckCards.size(); i++)
+		{
+			System.out.println(DeckCards.get(i).getSuit() + "\t" + DeckCards.get(i).getRank());
+		}
+	}
+	
+	void shuffle() {
+		Collections.shuffle(DeckCards);
+	}
+		
+	public Card draw() {
+		// return next card
+		Card c = DeckCards.get(0);
+		DeckCards.remove(c);
+		return c;
+	}
+	
+	public int NbrOfCards() {
+		// how many cards remaining to be drawn
+		return DeckCards.size();
+	}
 
 }

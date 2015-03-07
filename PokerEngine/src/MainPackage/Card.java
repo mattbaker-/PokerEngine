@@ -1,29 +1,37 @@
 package MainPackage;
 
-public class Card {
-	
-	private String cardRank;
-	private String cardSuit;
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+import java.util.Collections;
 
-	}
-
-	public void setRank(String rank) {
-		this.cardRank = rank;
+public class Card implements Comparable<Card>
+{
+	private eSuit suit;
+	private eCardValue rank;
+	
+	private Card()
+	{
+		//
 	}
 	
-	public void setSuit(String suit) {
-		this.cardSuit = suit;
+	public Card(eSuit suit, eCardValue rank)
+	{
+		this.suit = suit;
+		this.rank = rank;
 	}
 	
-	public String getRank() {
-		return cardRank;
+	eSuit getSuit() {
+		return suit;
 	}
 	
-	public String getSuit() {
-		return cardSuit;
+	eCardValue getRank() {
+		return rank;
 	}
 	
+	public int compareTo(Card c){
+		if (this.rank.getValues() > c.rank.getValues()){
+			return rank.getValues();
+		}
+		else {
+			return c.rank.getValues();
+		}
+	}
 }
